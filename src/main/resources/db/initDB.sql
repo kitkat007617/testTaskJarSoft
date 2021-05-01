@@ -1,0 +1,25 @@
+CREATE TABLE IF NOT EXISTS categories (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY ,
+    name VARCHAR(255) UNIQUE NOT NULL ,
+    req_name VARCHAR(255) UNIQUE NOT NULL ,
+    deleted BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS banners (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY ,
+    name VARCHAR(255) UNIQUE NOT NULL ,
+    price DECIMAL(8,2) NOT NULL ,
+    id_category INTEGER NOT NULL ,
+    content TEXT NOT NULL ,
+    deleted BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (id_category) REFERENCES categories (id)
+);
+
+CREATE TABLE IF NOT EXISTS requests (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY ,
+    banner_id INTEGER NOT NULL ,
+    user_agent TEXT  NOT NULL ,
+    ip_address VARCHAR(255) NOT NULL ,
+    date_time DATETIME NOT NULL ,
+    FOREIGN KEY (banner_id) REFERENCES banners (id)
+);
