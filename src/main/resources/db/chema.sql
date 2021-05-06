@@ -23,3 +23,17 @@ CREATE TABLE IF NOT EXISTS requests (
     date_time DATETIME NOT NULL ,
     FOREIGN KEY (banner_id) REFERENCES banners (id)
 );
+
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY ,
+    name VARCHAR(255) NOT NULL ,
+    email VARCHAR(255) UNIQUE NOT NULL ,
+    password VARCHAR(255) NOT NULL,
+    deleted BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS roles (
+    user_id INTEGER NOT NULL ,
+    role VARCHAR(255) NOT NULL ,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
