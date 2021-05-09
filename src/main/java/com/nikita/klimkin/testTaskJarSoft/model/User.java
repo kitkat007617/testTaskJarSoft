@@ -1,5 +1,8 @@
 package com.nikita.klimkin.testTaskJarSoft.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.nikita.klimkin.testTaskJarSoft.util.JsonDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +13,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
@@ -18,7 +22,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends AbstractPersistable<Integer> {
+public class User extends AbstractPersistable<Integer> implements Serializable {
 
     @NotBlank
     @Column(name = "name")
@@ -30,6 +34,8 @@ public class User extends AbstractPersistable<Integer> {
 
     @NotBlank
     @Column(name = "password")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonDeserialize(using = JsonDeserializer.class)
     private String password;
 
     @NotNull

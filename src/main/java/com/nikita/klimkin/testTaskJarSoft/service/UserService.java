@@ -4,6 +4,7 @@ import com.nikita.klimkin.testTaskJarSoft.model.Banner;
 import com.nikita.klimkin.testTaskJarSoft.model.User;
 import com.nikita.klimkin.testTaskJarSoft.repository.UserRepository;
 import com.nikita.klimkin.testTaskJarSoft.util.ValidationUtil;
+import com.nikita.klimkin.testTaskJarSoft.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +40,9 @@ public class UserService {
 
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("user with email = " + email + "doesnt exist"));
     }
 }

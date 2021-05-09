@@ -1,7 +1,13 @@
 INSERT INTO users (name, email, password)
 VALUES
-       ('user', 'user@email.ru', 'user_pass'),
-       ('admin', 'admin@email.ru', 'admin_pass');
+       ('user', 'user@email.ru', '{noop}user_pass'),
+       ('admin', 'admin@email.ru', '{noop}admin_pass');
+
+INSERT INTO roles (user_id, role)
+VALUES
+        ('1', 'USER'),
+       ('2', 'USER'),
+       ('2', 'ADMIN');
 
 INSERT INTO categories (name, req_name)
 VALUES
