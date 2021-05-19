@@ -3,6 +3,7 @@ package com.nikita.klimkin.testTaskJarSoft.controller;
 import com.nikita.klimkin.testTaskJarSoft.model.Banner;
 import com.nikita.klimkin.testTaskJarSoft.model.Request;
 import com.nikita.klimkin.testTaskJarSoft.service.RequestService;
+import com.nikita.klimkin.testTaskJarSoft.util.ValidationUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -39,9 +40,10 @@ public class RequestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('ADMIN')")
-    public void update (@Valid @RequestBody Request banner, @PathVariable int id) {
-        log.info("update request {} with id = {}", banner, id);
-        service.update(banner);
+    public void update (@Valid @RequestBody Request request, @PathVariable int id) {
+        log.info("update request {} with id = {}", request, id);
+        ValidationUtil.assureIdConsistent(request, id);
+        service.update(request);
     }
 
     @GetMapping(value = "/{id}")

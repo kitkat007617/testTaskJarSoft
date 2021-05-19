@@ -1,5 +1,6 @@
 package com.nikita.klimkin.testTaskJarSoft.repository;
 
+import com.nikita.klimkin.testTaskJarSoft.model.Banner;
 import com.nikita.klimkin.testTaskJarSoft.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
@@ -16,4 +18,6 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
     @Transactional
     @Query("UPDATE Category c SET c.deleted = false WHERE c.id=:id")
     int delete(@Param("id") int id);
+
+    List<Category> findAllByDeleted(boolean deleted);
 }

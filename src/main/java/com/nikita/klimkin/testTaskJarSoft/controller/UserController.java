@@ -3,6 +3,7 @@ package com.nikita.klimkin.testTaskJarSoft.controller;
 import com.nikita.klimkin.testTaskJarSoft.model.Banner;
 import com.nikita.klimkin.testTaskJarSoft.model.User;
 import com.nikita.klimkin.testTaskJarSoft.service.UserService;
+import com.nikita.klimkin.testTaskJarSoft.util.ValidationUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,7 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public void update (@Valid @RequestBody User user, @PathVariable int id) {
         log.info("update user {} with id = {}", user, id);
+        ValidationUtil.assureIdConsistent(user, id);
         service.update(user);
     }
 

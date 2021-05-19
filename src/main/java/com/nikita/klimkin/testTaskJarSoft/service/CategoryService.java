@@ -39,4 +39,8 @@ public class CategoryService {
     public List<Category> getAll() {
         return categoryRepository.findAll();
     }
+
+    public List<Category> getAllForUI() {
+        return categoryRepository.findAllByDeleted(false);
+    }
 }

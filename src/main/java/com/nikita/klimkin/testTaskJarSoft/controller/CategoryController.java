@@ -3,6 +3,7 @@ package com.nikita.klimkin.testTaskJarSoft.controller;
 import com.nikita.klimkin.testTaskJarSoft.model.Banner;
 import com.nikita.klimkin.testTaskJarSoft.model.Category;
 import com.nikita.klimkin.testTaskJarSoft.service.CategoryService;
+import com.nikita.klimkin.testTaskJarSoft.util.ValidationUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     public void update(@Valid @RequestBody Category category, @PathVariable int id) {
         log.info("update category {} with id={}", category, id);
+        ValidationUtil.assureIdConsistent(category, id);
         service.update(category);
     }
 
@@ -50,11 +52,18 @@ public class CategoryController {
         return service.get(id);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Category> getAll() {
         log.info("get all categories");
         return service.getAll();
     }
+
+    @GetMapping()
+    public List<Category> getAllForUI() {
+        log.info("get all not deleted categories");
+        return service.getAllForUI();
+    }
+
 
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable int id) {

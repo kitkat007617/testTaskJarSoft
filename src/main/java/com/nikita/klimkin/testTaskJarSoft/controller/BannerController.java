@@ -2,6 +2,7 @@ package com.nikita.klimkin.testTaskJarSoft.controller;
 
 import com.nikita.klimkin.testTaskJarSoft.model.Banner;
 import com.nikita.klimkin.testTaskJarSoft.service.BannerService;
+import com.nikita.klimkin.testTaskJarSoft.util.ValidationUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -40,20 +41,35 @@ public class BannerController {
     @PreAuthorize("hasRole('ADMIN')")
     public void update (@Valid @RequestBody Banner banner, @PathVariable int id) {
         log.info("update banner {} with id = {}", banner, id);
+        ValidationUtil.assureIdConsistent(banner, id);
         service.update(banner);
     }
 
     @GetMapping(value = "/{id}")
-    public Banner get(@PathVariable int id) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public Banner getById(@PathVariable int id) {
         log.info("get banner with id={}", id);
-        return service.get(id);
+        return service.getById(id);
     }
 
-    @GetMapping
+    @GetMapping(value = "/bid")
+    public Banner get(@RequestParam String category) {
+        log.info("get banner with category={}", category);
+        return service.getForUser(category);
+    }
+
+    @GetMapping(value = "/all")
     public List<Banner> getAll() {
         log.info("get all banners");
         return service.getAll();
     }
+
+    @GetMapping
+    public List<Banner> getAllForUI() {
+        log.info("get all not deleted banners");
+        return service.getAllForUI();
+    }
+
 
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable int id) {

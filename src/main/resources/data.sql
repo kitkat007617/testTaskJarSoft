@@ -5,9 +5,9 @@ VALUES
 
 INSERT INTO roles (user_id, role)
 VALUES
-        ('1', 'USER'),
-       ('2', 'USER'),
-       ('2', 'ADMIN');
+        (1, 'USER'),
+       (2, 'USER'),
+       (2, 'ADMIN');
 
 INSERT INTO categories (name, req_name)
 VALUES

@@ -53,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("api/admin/**").hasRole("ADMIN")
             .antMatchers("api/**").hasAnyRole("USER", "ADMIN")
             .antMatchers("/login").permitAll()
+            .antMatchers("/swagger-ui.html").permitAll()
             .anyRequest().authenticated()
             .and().httpBasic()
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -14,4 +14,9 @@ public class ValidationUtil {
         if (entity.isNew())
             throw new NotFoundException("entity must be not new!");
     }
+
+    public static <T extends AbstractPersistable> void assureIdConsistent(T entity, Integer id) {
+        if (entity.getId() != id)
+            throw new IllegalArgumentException("entity id must be the same with argument id");
+    }
 }
